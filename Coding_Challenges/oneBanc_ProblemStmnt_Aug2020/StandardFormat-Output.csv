@@ -1,0 +1,17 @@
+﻿Date      ,Transaction Description            ,Debit,Credit,Currency,CardName,Transaction,Location
+12-01-2018,STIC TRAVELS PVT LTD DELHI         ,0,32256,INR,Rahul,Domestic,delhi
+13-01-2018,SRILANKANUPGRADE KATUNAYAKE        ,6,0,EUR,Rahul,International,katunayake
+13-01-2018,FLIPKART INTERNET PRIVATE BANGALORE,211687,0,INR,Rahul,Domestic,bangalore
+14-01-2018,HEALTHGUARD LIMITED KATUNAYAKE     ,0,5,USD,Rahul,International,katunayake
+14-01-2018,FOOT RUB BEDRLIN                   ,20,0,POUND,Rahul,International,bedrlin
+14-01-2018,FLEMINGO DUTY FREE Mumbai          ,18796.99,0,INR,Rahul,Domestic,mumbai
+14-01-2018,AIRTEL PAYMENT MUMBAI              ,1297,0,INR,Rahul,Domestic,mumbai
+14-01-2018,AIRTEL PAYMENT CHENNAI             ,0,902,INR,Rahul,Domestic,chennai
+17-01-2018,PAYTM NOIDA                        ,165,0,INR,Ritu,Domestic,noida
+17-01-2018,BIKANERVALA GURGAON                ,325,0,INR,Ritu,Domestic,gurgaon
+19-01-2018,VFS GLOBAL SERVICES PVT MUMBAI     ,1200,0,INR,Ritu,Domestic,mumbai
+20-01-2018,California Games CALIFORNIA        ,100,0,USD,Rahul,International,california
+21-01-2018,Amazon Seller Services BANGALORE   ,0,2155,INR,Ritu,Domestic,bangalore
+22-01-2018,FLIPKART INTERNET PRIVATE BANGALORE,5000,0,INR,Rahul,Domestic,bangalore
+30-01-2018,NewYorkShop NEWYORK                ,200,0,USD,Rahul,International,newyork
+08-02-2018,EURO WINGS DUSSELDOR               ,5,0,EUR,Rahul,International,dusseldor
