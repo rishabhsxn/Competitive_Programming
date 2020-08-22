@@ -1,12 +1,10 @@
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -31,7 +29,7 @@ public class FormatStatement{
         int dateIndex=0, tDescriptionIndex=0, creditIndex=0, debitIndex=0, amountIndex=0;
 
         // TreeMap to store the record objects so that they are automatically sorted based on date when writing to file
-        Map<Date, Record> recordMap = new TreeMap<Date, Record>();
+        Map<Date, Record> recordsMap = new TreeMap<Date, Record>();
 
 
         while(sc.hasNext()){
@@ -90,16 +88,13 @@ public class FormatStatement{
                             record.credit = "0";
                     }
 
-                    System.out.println("Date: " + record.date);
-                    System.out.println("Transaction Description: "+ record.transactionDescription);
-                    System.out.println("Debit: " + record.debit);
-                    System.out.println("Credit: "+ record.credit);
-                    System.out.println("Currency: "+ record.currency);
-                    System.out.println("CardName: " + record.cardName);
-                    System.out.println("Transaction: " + record.transactionType);
-                    System.out.println("Location: "+ record.location);
-                    System.out.println("\n------------------------------------------------------------------------------------------\n");
+                    
+                    // save the Record object in TreeMap
 
+                    // date parsing 
+                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    Date d = dateFormat.parse(record.date);
+                    recordsMap.put(d, record);
                 }
 
                 else{
@@ -156,13 +151,24 @@ public class FormatStatement{
 
         }
 
-        sc.close();
+        // print all Record objects and see if they are in order based on Dates
+        for(Map.Entry<Date, Record> entry: recordsMap.entrySet()){
+            Record record = new Record();
+            record = entry.getValue();
 
-        // date parsing 
-        // String dateS = "19-01-2020";
-        // DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        // Date d = format.parse(dateS);
-        // System.out.println(d);
+            System.out.println("Date: " + record.date);
+            System.out.println("Transaction Description: "+ record.transactionDescription);
+            System.out.println("Debit: " + record.debit);
+            System.out.println("Credit: "+ record.credit);
+            System.out.println("Currency: "+ record.currency);
+            System.out.println("CardName: " + record.cardName);
+            System.out.println("Transaction: " + record.transactionType);
+            System.out.println("Location: "+ record.location);
+            System.out.println("\n------------------------------------------------------------------------------------------\n");
+
+        }
+
+        sc.close();
     }
 }
 
