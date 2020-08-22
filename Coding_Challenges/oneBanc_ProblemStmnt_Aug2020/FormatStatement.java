@@ -133,7 +133,7 @@ public class FormatStatement{
                     else{
                         record.transactionDescription = info[tDescriptionIndex].replaceAll("\n", "").replaceAll("\r", "");
                         record.currency = record.transactionDescription.substring(record.transactionDescription.lastIndexOf(" ")+1);
-                        record.transactionDescription = record.transactionDescription.replace(record.currency, "");
+                        record.transactionDescription = record.transactionDescription.substring(0, record.transactionDescription.lastIndexOf(record.currency));
                     }
 
                     record.location = record.transactionDescription.trim().substring(record.transactionDescription.trim().lastIndexOf(" ")+1);
