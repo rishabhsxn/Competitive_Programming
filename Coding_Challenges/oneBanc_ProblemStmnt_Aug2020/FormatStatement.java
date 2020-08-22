@@ -113,10 +113,8 @@ public class FormatStatement{
 
                     // 2. It may be a card name     (length of string is less than 15)
                     else if(line.length() <= 15){
-                        Pattern p = Pattern.compile(",(.*?),");
-                        Matcher m = p.matcher(line);
-                        if(m.find())
-                            name = m.group(1);
+                        line = line.replaceAll(",", "");
+                        name = line.trim();
                     }
 
                     // 3. It may be the order of records (column headers)
