@@ -20,20 +20,79 @@ public class FormatStatement{
     final static String INTERNATIONAL = "International";
 
     public static void main(String[] args){
-        
-        File inputFile = new File(INPUT_FILE_1);
 
-        String OUTPUT_FILENAME = inputFile.getName().replace("Input", "Output");
-        File outputFile = new File(OUTPUT_FILENAME);
+        System.out.println("-------------------------------------------------------");
+        System.out.println("|             STANDARDIZE CARD STATEMENTS             |");
+        System.out.println("-------------------------------------------------------\n");
 
-        try{
-            StandardizeStatement(inputFile, outputFile);
-            System.out.println("Successful !");
-        }
-        catch(IOException e){
-            System.out.println("An Error occured!! Couldn't read or write file");
-        }
-        
+        System.out.println("1. "+INPUT_FILE_1);
+        System.out.println("2. "+INPUT_FILE_2);
+        System.out.println("3. "+INPUT_FILE_3);
+        System.out.println("4. "+INPUT_FILE_4);
+        System.out.println("5. Enter file name manually");
+        System.out.println("6. Exit\n");
+
+        Scanner input = new Scanner(System.in);
+        int choice;
+
+        do{
+            String input_fileName = "None";
+            int okFlag = 1;
+            System.out.print("choice: ");
+            choice = input.nextInt();
+
+            switch(choice){
+                case 1:
+                    input_fileName = INPUT_FILE_1;
+                    break;
+
+                case 2:
+                    input_fileName = INPUT_FILE_2;
+                    break;
+
+                case 3:
+                    input_fileName = INPUT_FILE_3;
+                    break;
+
+                case 4:
+                    input_fileName = INPUT_FILE_4;
+                    break;
+
+                case 5:
+                    System.out.print("\nEnter filename: ");
+                    input.nextLine();   // to ignore enter
+                    input_fileName = input.nextLine();
+                    break;
+
+                case 6:
+                    okFlag = 0;
+                    System.out.println("\nThank you!!\n");
+                    break;
+
+                default:
+                    System.out.println("Wrong input!!\n");
+                    okFlag = 0;
+
+            }
+
+            if(okFlag==1){
+                File inputFile = new File(input_fileName);
+
+                String OUTPUT_FILENAME = inputFile.getName().replace("Input", "Output");
+                File outputFile = new File(OUTPUT_FILENAME);
+
+                try{
+                    StandardizeStatement(inputFile, outputFile);
+                    System.out.println("Successful !\n\n");
+                }
+                catch(IOException e){
+                    System.out.println("An Error occured!! Couldn't read or write file\n\n");
+                }
+            }
+
+        }while(choice>0 && choice<6);
+
+                
 
     }
 
