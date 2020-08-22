@@ -1,0 +1,14 @@
+The program is a menu-driven program.
+
+For the successful run of the program, the files that are to be standardized should be kept in the same
+folder as of the program's executable (byte code) file.
+Above is true for any of the 4 input case files or any manual file name entered in the program.
+
+Developed on: Windows 10
+
+
+To run the program -
+In the same directory of program, run the following in terminal
+
+1. javac FormatStatement.java
+2. java FormatStatement
