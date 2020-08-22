@@ -80,7 +80,7 @@ public class FormatStatement{
                         if(record.debit.isBlank())
                             record.debit = "0";
 
-                        record.credit = info[creditIndex];
+                        record.credit = info[creditIndex].replaceAll("\n", "").replaceAll("\r", "");
                         if(record.credit.isBlank())
                             record.credit = "0";
                     }
@@ -148,24 +148,21 @@ public class FormatStatement{
 
         }
 
-        // print all Record objects and see if they are in order based on Dates
+        sc.close();
+
+        // write the Records in the output file
+        String OUTPUT_FILENAME = FILE_2.replace("Input", "Output");
+        File outputFile = new File(OUTPUT_FILENAME);
+        FileWriter fileWriter = new FileWriter(outputFile);
+
+        fileWriter.write("Date,Transaction Description,Debit,Credit,Currency,CardName,Transaction,Location\n");
         for(Map.Entry<Date, Record> entry: recordsMap.entrySet()){
             Record record = new Record();
             record = entry.getValue();
-
-            System.out.println("Date: " + record.date);
-            System.out.println("Transaction Description: "+ record.transactionDescription);
-            System.out.println("Debit: " + record.debit);
-            System.out.println("Credit: "+ record.credit);
-            System.out.println("Currency: "+ record.currency);
-            System.out.println("CardName: " + record.cardName);
-            System.out.println("Transaction: " + record.transactionType);
-            System.out.println("Location: "+ record.location);
-            System.out.println("\n------------------------------------------------------------------------------------------\n");
-
+            fileWriter.write(record.getRow());
         }
+        fileWriter.close();
 
-        sc.close();
     }
 }
 
@@ -178,4 +175,10 @@ class Record{
     String cardName;
     String transactionType;
     String location;
+
+    String getRow(){
+        String row;
+        row = date + "," + transactionDescription + "," + debit + "," + credit + "," + currency + "," + cardName + "," + transactionType + "," + location + "\n";
+        return row;
+    }
 }
