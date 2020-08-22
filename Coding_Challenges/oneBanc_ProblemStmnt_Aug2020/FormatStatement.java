@@ -64,15 +64,15 @@ public class FormatStatement{
                     Record record = new Record();
 
                     record.transactionType = transactionType;
-                    record.cardName = name;
+                    record.cardName = name.replaceAll("\n", "").replaceAll("\r", "");
                     record.date = info[dateIndex];
                     
                     if(transactionType.equals(DOMESTIC)){
-                        record.transactionDescription = info[tDescriptionIndex];
+                        record.transactionDescription = info[tDescriptionIndex].replaceAll("\n", "").replaceAll("\r", "");
                         record.currency = "INR";
                     }
                     else{
-                        record.transactionDescription = info[tDescriptionIndex];
+                        record.transactionDescription = info[tDescriptionIndex].replaceAll("\n", "").replaceAll("\r", "");
                         record.currency = record.transactionDescription.substring(record.transactionDescription.lastIndexOf(" ")+1);
                         record.transactionDescription = record.transactionDescription.replace(record.currency, "");
                     }
@@ -179,6 +179,7 @@ public class FormatStatement{
         // write the Records in the output file
         FileWriter fileWriter = new FileWriter(outputFile);
 
+        // output file will contain records sorted based on the Date of transaction
         fileWriter.write("Date,Transaction Description,Debit,Credit,Currency,CardName,Transaction,Location\n");
         for(Map.Entry<Date, Record> entry: recordsMap.entrySet()){
             Record record = new Record();
@@ -189,6 +190,8 @@ public class FormatStatement{
     }
 }
 
+
+// this class is defined in the same file because it is only needed for the public FormatStatement class
 class Record{
     String date;
     String transactionDescription;
