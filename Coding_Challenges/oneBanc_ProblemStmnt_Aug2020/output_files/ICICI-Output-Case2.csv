@@ -4,7 +4,7 @@ Date,Transaction Description,Debit,Credit,Currency,CardName,Transaction,Location
 19-01-2018,FOOT RUB BERLIN                  ,26,0,EUR,Raj,International,BERLIN
 20-01-2018,California Games CALIFORNIA         ,107,0,USD,Raj,International,CALIFORNIA
 30-01-2018,NewYorkShop NEWYORK                 ,210,0,USD,Raj,International,NEWYORK
-08-02-2018,O WINGS DUSSELDOR                ,15,0,EUR,Raj,International,DUSSELDOR
+08-02-2018,EURO WINGS DUSSELDOR                ,15,0,EUR,Raj,International,DUSSELDOR
 12-03-2018,Amazon Cash Back Jan 18            ,213,0,INR,Rahul,Domestic,18
 16-03-2018,SUBWAY GURGAON                     ,0,230,INR,Rahul,Domestic,GURGAON
 18-03-2018,BIRYANI PARADISE GURGAON           ,0,335,INR,Rahul,Domestic,GURGAON
