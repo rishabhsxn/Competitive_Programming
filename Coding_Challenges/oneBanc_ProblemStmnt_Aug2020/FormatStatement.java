@@ -92,7 +92,7 @@ public class FormatStatement{
 
         }while(choice>0 && choice<6);
 
-                
+        input.close();
 
     }
 
