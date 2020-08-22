@@ -19,9 +19,8 @@ public class FormatStatement{
     final static String INTERNATIONAL = "International";
 
     public static void main(String[] args) throws Exception{
-        // System.out.println("Hello World");
         Scanner sc = new Scanner(new File(FILE_2));
-        sc.useDelimiter("\n");
+        sc.useDelimiter("\n");      // using newLine as delimiter so that program read data line by line
 
         String transactionType="";
         String name="";
@@ -38,10 +37,8 @@ public class FormatStatement{
 
             if(line.length() > 4){      // to eliminate unnecessary strings like ",,,"
 
-                // System.out.println(line);
-
+                // If a line contains a number, then it is a record
                 if(Pattern.compile("[0-9]").matcher(line).find()){
-                    // If a line contains a number, then it is a record
                     String[] info = line.split(",");
 
                     // create Record object
@@ -97,8 +94,8 @@ public class FormatStatement{
                     recordsMap.put(d, record);
                 }
 
+                // if a line doesn't contain a number, there are 3 possibilies -
                 else{
-                    // if a line doesn't contain a number, there are 3 possibilies -
 
                     // 1. It may be transaction type    (check the string for Domestic and International)
                     if(line.contains("Domestic Transaction"))
