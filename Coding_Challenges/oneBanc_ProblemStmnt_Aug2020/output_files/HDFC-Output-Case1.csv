@@ -1,0 +1,11 @@
+Date,Transaction Description,Debit,Credit,Currency,CardName,Transaction,Location
+12-01-2018,STIC TRAVELS PVT LTD DELHI         ,0,32256,INR,Rahul,Domestic,DELHI
+13-01-2018,SRILANKANUPGRADE KATUNAYAKE         ,6,0,EUR,Rahul,International,KATUNAYAKE
+14-01-2018,FOOT RUB BERLIN                  ,20,0,EUR,Rahul,International,BERLIN
+17-01-2018,BIKANERVALA GURGAON                ,325,0,INR,Ritu,Domestic,GURGAON
+19-01-2018,VFS GLOBAL SERVICES PVT MUMBAI     ,1200,0,INR,Ritu,Domestic,MUMBAI
+20-01-2018,California Games CALIFORNIA         ,100,0,USD,Rahul,International,CALIFORNIA
+21-01-2018,Amazon Seller Services BANGALORE   ,0,2155,INR,Ritu,Domestic,BANGALORE
+22-01-2018,FLIPKART INTERNET PRIVATE BANGALORE,5000,0,INR,Rahul,Domestic,BANGALORE
+30-01-2018,NewYorkShop NEWYORK                 ,0,200,USD,Rahul,International,NEWYORK
+08-02-2018,O WINGS DUSSELDOR                ,5,0,EUR,Rahul,International,DUSSELDOR
