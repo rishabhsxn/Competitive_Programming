@@ -1,5 +1,6 @@
 import java.io.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -10,16 +11,34 @@ import java.util.regex.Pattern;
 
 public class FormatStatement{
 
-    final static String FILE_1 = "HDFC-Input-Case1.csv";
-    final static String FILE_2 = "ICICI-Input-Case2.csv";
-    final static String FILE_3 = "Axis-Input-Case3.csv";
-    final static String FILE_4 = "IDFC-Input-Case4.csv";
+    final static String INPUT_FILE_1 = "HDFC-Input-Case1.csv";
+    final static String INPUT_FILE_2 = "ICICI-Input-Case2.csv";
+    final static String INPUT_FILE_3 = "Axis-Input-Case3.csv";
+    final static String INPUT_FILE_4 = "IDFC-Input-Case4.csv";
 
     final static String DOMESTIC = "Domestic";
     final static String INTERNATIONAL = "International";
 
-    public static void main(String[] args) throws Exception{
-        Scanner sc = new Scanner(new File(FILE_2));
+    public static void main(String[] args){
+        
+        File inputFile = new File(INPUT_FILE_1);
+
+        String OUTPUT_FILENAME = inputFile.getName().replace("Input", "Output");
+        File outputFile = new File(OUTPUT_FILENAME);
+
+        try{
+            StandardizeStatement(inputFile, outputFile);
+            System.out.println("Successful !");
+        }
+        catch(IOException e){
+            System.out.println("An Error occured!! Couldn't read or write file");
+        }
+        
+
+    }
+
+    static void StandardizeStatement(File inputFile, File outputFile) throws IOException{
+        Scanner sc = new Scanner(inputFile);
         sc.useDelimiter("\n");      // using newLine as delimiter so that program read data line by line
 
         String transactionType="";
@@ -66,21 +85,21 @@ public class FormatStatement{
 
                         // if amount contains "cr" then it is credit and debit is zero
                         if(amount.contains("cr")){
-                            record.credit = amount.split(" ")[0];
+                            record.credit = amount.split(" ")[0].replaceAll("[^\\d.]", ""); // to remove any char other than digits
                             record.debit = "0";
                         }
                         else{
-                            record.debit = amount;
+                            record.debit = amount.replaceAll("[^\\d.]", "");
                             record.credit = "0";
                         }      
                     }
                     else{
                         // fill credit and debit based on creditIndex and debitIndex (Handle if they are empty)
-                        record.debit = info[debitIndex];
+                        record.debit = info[debitIndex].replaceAll("[^\\d.]", "");
                         if(record.debit.isBlank())
                             record.debit = "0";
 
-                        record.credit = info[creditIndex].replaceAll("\n", "").replaceAll("\r", "");
+                        record.credit = info[creditIndex].replaceAll("[^\\d.]", "");
                         if(record.credit.isBlank())
                             record.credit = "0";
                     }
@@ -90,8 +109,14 @@ public class FormatStatement{
 
                     // date parsing 
                     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    Date d = dateFormat.parse(record.date);
-                    recordsMap.put(d, record);
+                    try{
+                        Date d = dateFormat.parse(record.date);
+                        recordsMap.put(d, record);
+                    }
+                    catch(ParseException e){
+                        // if date couldn't be parsed, don't store the record
+                        System.out.println("Date couldn't be parsed for " + record.cardName + ": " + record.transactionDescription);
+                    }
                 }
 
                 // if a line doesn't contain a number, there are 3 possibilies -
@@ -150,9 +175,8 @@ public class FormatStatement{
 
         sc.close();
 
+
         // write the Records in the output file
-        String OUTPUT_FILENAME = FILE_2.replace("Input", "Output");
-        File outputFile = new File(OUTPUT_FILENAME);
         FileWriter fileWriter = new FileWriter(outputFile);
 
         fileWriter.write("Date,Transaction Description,Debit,Credit,Currency,CardName,Transaction,Location\n");
@@ -162,7 +186,6 @@ public class FormatStatement{
             fileWriter.write(record.getRow());
         }
         fileWriter.close();
-
     }
 }
 
@@ -176,6 +199,7 @@ class Record{
     String transactionType;
     String location;
 
+    // returns the whole row to be inserted in output file
     String getRow(){
         String row;
         row = date + "," + transactionDescription + "," + debit + "," + credit + "," + currency + "," + cardName + "," + transactionType + "," + location + "\n";
