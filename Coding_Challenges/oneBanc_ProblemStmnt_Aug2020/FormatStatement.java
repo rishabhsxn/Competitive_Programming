@@ -2,10 +2,10 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 
@@ -105,8 +105,8 @@ public class FormatStatement{
         int amountFlag=0;
         int dateIndex=0, tDescriptionIndex=0, creditIndex=0, debitIndex=0, amountIndex=0;
 
-        // TreeMap to store the record objects so that they are automatically sorted based on date when writing to file
-        Map<Date, Record> recordsMap = new TreeMap<Date, Record>();
+        // TreeSet to store the record objects so that we can sort them based on date when writing to file using comparator
+        TreeSet<Record> recordsSet = new TreeSet<Record>(new MyDateComp());
 
 
         while(sc.hasNext()){
@@ -164,18 +164,8 @@ public class FormatStatement{
                     }
 
                     
-                    // save the Record object in TreeMap
-
-                    // date parsing 
-                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    try{
-                        Date d = dateFormat.parse(record.date);
-                        recordsMap.put(d, record);
-                    }
-                    catch(ParseException e){
-                        // if date couldn't be parsed, don't store the record
-                        System.out.println("Date couldn't be parsed for " + record.cardName + ": " + record.transactionDescription);
-                    }
+                    // save the Record object in TreeSet
+                    recordsSet.add(record);
                 }
 
                 // if a line doesn't contain a number, there are 3 possibilies -
@@ -240,9 +230,7 @@ public class FormatStatement{
 
         // output file will contain records sorted based on the Date of transaction
         fileWriter.write("Date,Transaction Description,Debit,Credit,Currency,CardName,Transaction,Location\n");
-        for(Map.Entry<Date, Record> entry: recordsMap.entrySet()){
-            Record record = new Record();
-            record = entry.getValue();
+        for(Record record: recordsSet){
             fileWriter.write(record.getRow());
         }
         fileWriter.close();
@@ -267,4 +255,42 @@ class Record{
         row = date + "," + transactionDescription + "," + debit + "," + credit + "," + currency + "," + cardName + "," + transactionType + "," + location + "\n";
         return row;
     }
+
+    // returns date to help in comparator to sort record objects
+    Date getDate(){
+         // date parsing 
+         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+         try{
+             Date d = dateFormat.parse(date);
+             return d;
+         }
+         catch(ParseException e){
+             // if date couldn't be parsed, don't store the record
+             Date t = getDate();
+             System.out.println("Date couldn't be parsed for " + cardName + ": " + transactionDescription);
+             return t;
+         }
+    }
+
+    String getTransactionDescription(){
+        return transactionDescription;
+    }
+}
+
+
+// comparator class to sort record objects in TreeSet
+class MyDateComp implements Comparator<Record>{
+
+    @Override
+    public int compare(Record r1, Record r2) {
+        int x = r1.getDate().compareTo(r2.getDate());
+
+        // same date returns 0
+        if(x==0){
+            return r1.getTransactionDescription().compareTo(r2.getTransactionDescription());
+        }
+        
+        return x;
+    }
+
 }
