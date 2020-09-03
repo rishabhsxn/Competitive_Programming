@@ -15,7 +15,8 @@ Space complexity: O(1)
 
 METHOD #2: (a) Instead of finding left and right wall while iterating the blocks, find the lmax and rmax before iterating and save them
 in two different arrays.
-(b) It can be further improved by using lmax and rmax variables instead of array
+(b) It can be further improved by using lmax and rmax variables instead of array. Logic is a bit complex. Breakdown of logic is
+present in the screenshot also present in the same directory.
 
 */
 
@@ -25,6 +26,7 @@ using namespace std;
 
 int calculateTotalWater(int size, int blocks[]);
 int calculateTotalWater2a(int size, int blocks[]);
+int calculateTotalWater2b(int size, int blocks[]);
 
 int main(){
     int size;
@@ -38,7 +40,7 @@ int main(){
     for(int i=0; i<size; i++)
         cin >> blocks[i];
 
-    int waterDrops = calculateTotalWater2a(size, blocks);
+    int waterDrops = calculateTotalWater2b(size, blocks);
     cout << "\nTotal water drops: " << waterDrops << endl << endl;
 
 
@@ -91,6 +93,33 @@ int calculateTotalWater2a(int size, int blocks[]){
     for(int k=0; k<size; k++){
         if(leftMax[k]>blocks[k] && rightMax[k]>blocks[k])
             water += min(leftMax[k], rightMax[k]) - blocks[k];
+    }
+
+    return water;
+}
+
+int calculateTotalWater2b(int size, int blocks[]){
+    int water=0;
+    int leftMax=0, rightMax=0;
+    int lo=0, hi=size-1;
+
+    while(lo<=hi){
+        if(blocks[lo] < blocks[hi]){
+            if(blocks[lo] > leftMax)
+                leftMax = blocks[lo];
+            else
+                water += (leftMax - blocks[lo]);
+
+            lo++;
+        }
+        else{
+            if(blocks[hi] > rightMax)
+                rightMax = blocks[hi];
+            else
+                water += (rightMax - blocks[hi]);
+
+            hi--;
+        }
     }
 
     return water;
