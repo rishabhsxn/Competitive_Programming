@@ -12,6 +12,10 @@ In second iteration, for every element, search it's counterpart (target - elemen
 Time Complexity = O(n)
 Space Complexity = O(n)  */
 
+/* METHOD #3 - USING HASHMAP (one iteration) - Traverse the array, if an element's counterpart is present in hashmap then return 
+the result otherwise, add the element to hashmap.
+Time Complexity = O(n)
+Space Complexity = O(n)  */
 
 #include<iostream>
 #include<vector>
@@ -59,13 +63,25 @@ class Solution{
             return {};
         }
 
+        vector<int> twoSum3(vector<int>& nums, int target){
+            unordered_map<int, int> m;
+            // traverse the array of elements
+            for(int i=0; i<nums.size(); i++){
+                // element's counterpart present in hashmap
+                if( m.find(target-nums[i]) != m.end() )
+                    return {m[target-nums[i]], i};  // return reversed because the searched counterpart will be a previous element
+                else
+                    m[nums[i]] = i;
+            }
+            return {};
+        }
 };
 
 int main(){
     vector<int> nums = {11, 7, 2, 16, 11};
     int target = 22;
 
-    vector<int> sol = Solution().twoSum2(nums, target);
+    vector<int> sol = Solution().twoSum3(nums, target);
     
     vector<int>::iterator itr;
     for(itr=sol.begin(); itr!=sol.end(); itr++)
