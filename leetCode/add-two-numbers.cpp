@@ -4,7 +4,8 @@ You may assume the two numbers do not contain any leading zero, except the numbe
 
 /* METHOD #1 - Iterate the lists and add the digits. Store in a new linked list and manage carry. 
 Time complexity = O(m+n)
-Space complexity = O(n) */
+Space complexity = O(n) 
+Runtime: 40 ms      Memory: 71.5 MB*/
 
 #include<iostream>
 #include<vector>
@@ -63,12 +64,9 @@ public:
             l2 = l2->next;
         }
 
-        /* Check if l1 or l2 is still having left over digits and we also have a non-zero carry to propagate further.
-        Or, both the list are fully traversed and carry is still non-zero. In that case, add a node for carry. */
-
         /* Now, we have 3 possible cases ->     
         a) l1 or l2 is still left & carry is zero  ---  Simply join remaining list to result list  
-        b) l1 or l2 is still left & carry is non-zero  ---  Check for further carry progation in remaining list and then join
+        b) l1 or l2 is still left & carry is non-zero  ---  Check for further carry propagation in remaining list and then join
         c) l1 and l2 are fully traversed & carry is non-zero  ---  add a node with carry value at last of result list */
 
         /* addRemainingList() function will handle case (a) & (b) */
