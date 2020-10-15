@@ -7,6 +7,11 @@ Time complexity = O(m+n)
 Space complexity = O(n) 
 Runtime: 40 ms      Memory: 71.5 MB*/
 
+/* METHOD #2 - Instead of using a new linked list, use any of the two list to store result by overwriting. 
+Time complexity = O(m+n)
+Space complexity = O(n) 
+Runtime: 20 ms     Memory: 71 MB */
+
 #include<iostream>
 #include<vector>
 
@@ -124,6 +129,56 @@ public:
             }
         }
     }
+
+    ListNode* addTwoNumbers2(ListNode* l1, ListNode* l2){
+        int carry=0;
+        int flag=0;
+
+        ListNode *result = l1, *follower = nullptr;
+
+        while(l1 && l2){
+            int sum = l1->val + l2->val + carry;
+
+            if(sum>9){
+                carry = sum/10;
+                sum %= 10;
+            }
+            else
+                carry = 0;
+
+            /* Instead of creating a new node, store in the List l1 */
+            l1->val = sum;
+
+            follower = l1;
+
+            l1 = l1->next;
+            l2 = l2->next;
+        }
+
+        /* Now, we have 3 possible cases ->     
+        a) l1 or l2 is still left & carry is zero  ---  Simply join remaining list to result list  
+        b) l1 or l2 is still left & carry is non-zero  ---  Check for further carry propagation in remaining list and then join
+        c) l1 and l2 are fully traversed & carry is non-zero  ---  add a node with carry value at last of result list */
+
+        /* addRemainingList() function will handle case (a) & (b) */
+
+        /* If l1 is left and carry is zero, then do nothing. However, if carry is non-zero, propagate the carry in l1 */
+        if(l1)
+            addRemainingList(l1, carry);
+        
+        /* If l2 is left and carry is zero, connect l2 (untraversed part) to end of l1. However, if carry is non-zero,
+        connect l2 to l1's end and propagate carry in l2 */
+        else if(l2){
+            follower->next = l2;
+            addRemainingList(l2, carry);
+        }
+        /* case (c) */
+        else if(carry!=0)
+            follower->next = new ListNode(carry);
+        
+        return result;
+    }
+
 };
 
 
@@ -153,7 +208,7 @@ int main(){
     print(l1);
     print(l2);
 
-    ListNode* result = Solution().addTwoNumbers1(l1, l2);
+    ListNode* result = Solution().addTwoNumbers2(l1, l2);
 
     cout << "Result: ";
     print(result);
