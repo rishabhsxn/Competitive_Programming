@@ -2,7 +2,9 @@
 order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 You may assume the two numbers do not contain any leading zero, except the number 0 itself. */
 
-/* METHOD #1 - Iterate the lists and add the digits. Store in a new linked list and manage carry. */
+/* METHOD #1 - Iterate the lists and add the digits. Store in a new linked list and manage carry. 
+Time complexity = O(m+n)
+Space complexity = O(n) */
 
 #include<iostream>
 #include<vector>
