@@ -7,6 +7,12 @@ Time complexity = O(n^2)
 Space complexity = O(n)  
 Runtime: 1304 ms    Memory: 148.1 MB */
 
+/* METHOD #2: Brute Force #2 - In this method, we will check all the substrings for the repetition. Use set for
+checking repetition of characters. This is the least efficient method. 
+Time Complexity = O(n^3)
+Runtime: Time exceeded on Leetcode */
+
+
 #include<iostream>
 #include<unordered_set>
 
@@ -45,6 +51,29 @@ public:
         return maxLen;
     }
 
+    /* Utility function for method #2 */
+    bool isThereRepetition(int start, int end, string s){
+        unordered_set<char> c;
+        for(int i=start; i<end; i++){
+            /* If char is found in set, return true */
+            if(c.find(s[i]) != c.end())
+                return true;
+            else
+                c.insert(s[i]);
+        }
+        return false;
+    }
+
+    int lengthOfLongestSubstring2(string s){
+        int maxLen=0;
+        for(int i=0; i<s.length(); i++)
+            for(int j=i+1; j<=s.length(); j++)
+                if(!isThereRepetition(i, j, s))
+                    maxLen = max(maxLen, j-i);
+
+        return maxLen;
+    }
+
 };
 
 
@@ -54,7 +83,7 @@ int main(){
     cout << "Enter String: ";
     getline(cin, s);
 
-    cout << "Max substring length: " << Solution().lengthOfLongestSubstring1(s) << endl;
+    cout << "Max substring length: " << Solution().lengthOfLongestSubstring2(s) << endl;
 
     return 0;
 }
