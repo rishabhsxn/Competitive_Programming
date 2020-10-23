@@ -12,6 +12,13 @@ checking repetition of characters. This is the least efficient method.
 Time Complexity = O(n^3)
 Runtime: Time exceeded on Leetcode */
 
+/* METHOD #3: Sliding Window - Use a Set to check repetition of characters. Traverse the elements, if not in set, include it
+in set and increase the window size in forward direction. If an element is present in set, remove the oldest element of window 
+from set and the window.
+Worst case will be when all the characters are same: "bbbbb", each element will be visited once by i and j -> O(2n)
+Time Complexity = O(n) 
+Space Complexity= O(n) 
+Runtime: 52 ms    Memory: 11 MB */
 
 #include<iostream>
 #include<unordered_set>
@@ -74,6 +81,26 @@ public:
         return maxLen;
     }
 
+    int lengthOfLongestSubstring3(string s){
+        int maxL = 0;
+        int i=0, j=0;   // initially window is at 0
+        int n = s.length();
+        unordered_set<char> us;
+
+        while(i<n && j<n){
+            /* If not found, add to set, expand window ahead and update maxL */
+            if(us.find(s[j]) == us.end()){
+                us.insert(s[j++]);
+                maxL = max(maxL, j-i);
+            }
+            /* if found, remove ith element from set, increase i */
+            else
+                us.erase(s[i++]);
+        }
+
+        return maxL;
+    }
+
 };
 
 
@@ -83,7 +110,7 @@ int main(){
     cout << "Enter String: ";
     getline(cin, s);
 
-    cout << "Max substring length: " << Solution().lengthOfLongestSubstring2(s) << endl;
+    cout << "Max substring length: " << Solution().lengthOfLongestSubstring3(s) << endl;
 
     return 0;
 }
