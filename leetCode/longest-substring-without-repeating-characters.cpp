@@ -20,8 +20,16 @@ Time Complexity = O(n)
 Space Complexity= O(n) 
 Runtime: 52 ms    Memory: 11 MB */
 
+/* METHOD #4: Optimized Sliding Window - Instead of shrinking window from left one-by-one, directly move the left side of the 
+window to the repeated character's index + 1 because till that all the substrings will have repetition of that character. 
+To move to the repeated character's index directly, use a map (key=char, val=index)
+Time Complexity = O(n) 
+Space Complexity = O(n) 
+Runtime: 20 ms    Memory: 8.6 MB */
+
 #include<iostream>
 #include<unordered_set>
+#include<unordered_map>
 
 using namespace std;
 
@@ -101,6 +109,30 @@ public:
         return maxL;
     }
 
+    int lengthOfLongestSubstring4(string s){
+        unordered_map<char, int> m;
+        int maxLen = 0;
+
+        /* i = left boundary of window      j = right boundary of window */
+        for(int i=0, j=0; j<s.length(); j++){
+            if(m.find(s[j]) != m.end()){
+                /* Because of this statement, we aren't required to delete the elements which were thrown out of window. This
+                condition will run even when the character is not repeated in the window substring, but is present in map
+                simply because it was once a part of the window. In this case, present value of i will be greater than
+                old index of that character. So, i will remain same. 
+                m[s[j]] + 1 because, new window will start after next index from repeated character's index */
+                i = max(i, m[s[j]] + 1);
+            }
+
+            /* update maxL in every iteration and add the current index to map. Repeated character's old index will
+            be overwritten by new index */
+            maxLen = max(maxLen, j-i+1);
+            m[s[j]] = j;
+        }
+
+        return maxLen;
+    }
+
 };
 
 
@@ -110,7 +142,7 @@ int main(){
     cout << "Enter String: ";
     getline(cin, s);
 
-    cout << "Max substring length: " << Solution().lengthOfLongestSubstring3(s) << endl;
+    cout << "Max substring length: " << Solution().lengthOfLongestSubstring4(s) << endl;
 
     return 0;
 }
