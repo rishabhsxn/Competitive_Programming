@@ -9,6 +9,13 @@ Time complexity = O(n)    because of reverse()
 Space complexity = O(1)
 Runtime: 0 ms       Memory: 6.9 MB */
 
+/* METHOD #2 - Use mod and division - using mod by 10, get the last digit, multiply by 10 and store in a variable, then
+remove the last digit from original number by dividing by 10. Do this for until the original number becomes 0.
+Also, take the variable as long and at last check if the reversed number is in integer 32 bit range.
+Time complexity = O(n)    loop for n digits
+Space complexity = O(1)
+Runtime: 0 ms       Memory: 6.5 MB */
+
 
 #include<iostream>
 #include<algorithm>
@@ -38,6 +45,17 @@ public:
         }
     }
 
+    int reverse2(int x){
+        long result=0;
+        while(x!=0){
+            result = result*10 + x%10;
+            x /= 10;
+        }
+        if(result<INT32_MIN || result>INT32_MAX)
+            return 0;
+        return result;
+    }
+
 };
 
 
@@ -46,7 +64,7 @@ int main(){
     std::cout << "Enter a number: ";
     std::cin >> x;
 
-    std::cout << Solution().reverse1(x) << std::endl;
+    std::cout << Solution().reverse2(x) << std::endl;
 
     return 0;
 }
